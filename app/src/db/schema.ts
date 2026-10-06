@@ -128,3 +128,13 @@ export const backendAssignmentsSchema = sqliteTable('backend_assignment', {
   feature: text().$type<BackendFeature>().primaryKey(),
   backendId: text().notNull(),
 });
+
+// Plain columns rather than a JSON payload: a membership is a handful of scalars, so there is no
+// versioned shape to migrate. Dates are ISO local dates (yyyy-MM-dd); a null end date means ongoing.
+export const gymMembershipsSchema = sqliteTable('gym_membership', {
+  id: text().primaryKey(),
+  name: text().notNull(),
+  startDate: text().notNull(),
+  endDate: text(),
+  notes: text().notNull().default(''),
+});
