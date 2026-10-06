@@ -1,12 +1,17 @@
 import { describe, it, expect, vi } from 'vitest';
 import { LocalDate } from '@js-joda/core';
 import { PlannedGymReminder } from '@/models/gym-reminders';
-import { setGymReminders } from '@/store/settings';
+import { setGymReminders, setTrackingReminders } from '@/store/settings';
 import { sessionFinished } from '@/store/stored-sessions';
 import { applyGymReminderEffects } from '@/store/gym-reminders/effects';
 import { createAddEffectTestBed } from '@/utils/__test__/add-effect-testbed';
 
-function setup(state: { gymReminders: boolean; hydrated?: boolean; sessionDate?: LocalDate }) {
+function setup(state: {
+  gymReminders: boolean;
+  trackingReminders?: boolean;
+  hydrated?: boolean;
+  sessionDate?: LocalDate;
+}) {
   const replaceAll = vi.fn<(reminders: PlannedGymReminder[]) => Promise<void>>().mockResolvedValue();
   const hydrated = state.hydrated ?? true;
   const sessions = state.sessionDate ? { s1: { id: 's1', date: state.sessionDate } } : {};
@@ -15,11 +20,17 @@ function setup(state: { gymReminders: boolean; hydrated?: boolean; sessionDate?:
       settings: {
         isHydrated: hydrated,
         gymReminders: state.gymReminders,
+        trackingReminders: state.trackingReminders ?? false,
+        trackWater: true,
+        trackFood: true,
+        trackSmoking: false,
+        waterGoalMl: 2000,
         gymReminderMissedDays: 2,
         gymReminderHour: 18,
       },
       storedSessions: { isHydrated: hydrated, sessions, activeSessionId: undefined },
       memberships: { isHydrated: hydrated, memberships: [] },
+      tracking: { isHydrated: hydrated, water: [], food: [], smoking: [], savedFoods: [] },
     },
     services: { gymReminderService: { replaceAll } },
   });
@@ -54,5 +65,20 @@ describe('gym reminder effects', () => {
     const planned = replaceAll.mock.calls[0]![0];
     expect(planned.length).toBeGreaterThan(0);
     expect(planned.every((x) => x.kind === 'missed')).toBe(true);
+  });
+
+  it('plans tracker reminders without any gym nudges when only tracking reminders are on', async () => {
+    const { testBed, replaceAll } = setup({
+      gymReminders: false,
+      trackingReminders: true,
+      sessionDate: LocalDate.now().minusDays(5),
+    });
+
+    await testBed.dispatchHandled(setTrackingReminders(true));
+
+    const planned = replaceAll.mock.calls[0]![0];
+    expect(planned.length).toBeGreaterThan(0);
+    expect(planned.some((x) => x.kind === 'missed')).toBe(false);
+    expect(planned.some((x) => x.kind === 'water')).toBe(true);
   });
 });

@@ -33,8 +33,10 @@ work to find the docs relevant to your area, and update it whenever you add, rem
 
 - [Memberships.md](./Memberships.md) - gym membership start/end date records: the model, the
   `gym_membership` table, the slice and effects, and the settings screens.
-- [GymReminders.md](./GymReminders.md) - opt-in notifications for skipped gym days (witty nudges) and
-  membership expiry: the pure planner, the scheduling service, and when the plan is rebuilt.
+- [Tracking.md](./Tracking.md) - the Track tab: water, food and smoking trackers with goals, streaks and
+  calendars, how streaks are defined, and what is not built yet (food database, barcode).
+- [GymReminders.md](./GymReminders.md) - opt-in notifications for skipped gym days (witty nudges), membership
+  expiry and tracker check-ins: the pure planner, the scheduling service, and when the plan is rebuilt.
 
 ## Running it yourself
 

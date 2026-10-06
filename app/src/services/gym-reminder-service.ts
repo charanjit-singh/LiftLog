@@ -24,8 +24,8 @@ export class GymReminderService {
   constructor(private tolgee: TolgeeInstance) {
     if (Platform.OS === 'android') {
       void setNotificationChannelAsync(channelId, {
-        name: 'Gym reminders',
-        description: 'Reminders to get to the gym and when a membership is about to end',
+        name: 'Gym and tracking reminders',
+        description: 'Reminders to get to the gym, log water and meals, and celebrate milestones',
         importance: AndroidImportance.DEFAULT,
       });
     }
@@ -69,6 +69,25 @@ export class GymReminderService {
       const [title, body] = nudgeMessages[reminder.messageIndex % nudgeMessages.length]!;
       const params = { days: reminder.daysSince };
       return { title: this.tolgee.t(title, params), body: this.tolgee.t(body, params) };
+    }
+    if (reminder.kind === 'water') {
+      return {
+        title: this.tolgee.t('tracking.reminder.water.title' satisfies TranslationKey),
+        body: this.tolgee.t('tracking.reminder.water.body' satisfies TranslationKey),
+      };
+    }
+    if (reminder.kind === 'food') {
+      return {
+        title: this.tolgee.t('tracking.reminder.food.title' satisfies TranslationKey),
+        body: this.tolgee.t('tracking.reminder.food.body' satisfies TranslationKey),
+      };
+    }
+    if (reminder.kind === 'smokeFreeMilestone') {
+      const params = { days: reminder.days };
+      return {
+        title: this.tolgee.t('tracking.reminder.smoke_free.title' satisfies TranslationKey, params),
+        body: this.tolgee.t('tracking.reminder.smoke_free.body' satisfies TranslationKey, params),
+      };
     }
     const params = { name: reminder.membershipName, days: reminder.daysLeft };
     return reminder.daysLeft === 0

@@ -6,6 +6,7 @@ import {
   setGymReminderHour,
   setGymReminderMissedDays,
   setGymReminders,
+  setTrackingReminders,
   setRestNotifications,
   setRestTimersEnabled,
 } from '@/store/settings';
@@ -25,12 +26,12 @@ export default function NotificationsPage() {
   const dispatch = useDispatch();
   const { gymReminderService } = useServices();
   // Turning it on is the moment to ask, so the system prompt has context. A refusal leaves it off.
-  const toggleGymReminders = async (enabled: boolean) => {
+  const toggleReminders = async (enabled: boolean, set: (value: boolean) => { type: string }) => {
     if (enabled && !(await gymReminderService.requestPermission())) {
       dispatch(showSnackbar({ text: t('gym_reminders.permission_denied.message') }));
       return;
     }
-    dispatch(setGymReminders(enabled));
+    dispatch(set(enabled));
   };
   return (
     <SettingsPage title={t('settings.notifications.title')} caption={t('settings.notifications.subtitle')}>
@@ -67,7 +68,14 @@ export default function NotificationsPage() {
           icon={'fitnessCenter'}
           supportingText={t('gym_reminders.subtitle')}
           value={settings.gymReminders}
-          onValueChange={(value) => void toggleGymReminders(value)}
+          onValueChange={(value) => void toggleReminders(value, setGymReminders)}
+        />
+        <SegmentedListSwitch
+          label={t('tracking.reminders.title')}
+          icon={'notifications'}
+          supportingText={t('tracking.reminders.subtitle')}
+          value={settings.trackingReminders}
+          onValueChange={(value) => void toggleReminders(value, setTrackingReminders)}
         />
         <SegmentedListSelect
           label={t('gym_reminders.missed_days.label')}

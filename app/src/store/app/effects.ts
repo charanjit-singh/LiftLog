@@ -13,6 +13,7 @@ import { initializeProgramStateSlice } from '../program';
 import { setStringAsync } from 'expo-clipboard';
 import { initializeBackendsStateSlice } from '@/store/backends';
 import { initializeMembershipsStateSlice } from '@/store/memberships';
+import { initializeTrackingStateSlice } from '@/store/tracking';
 
 export function applyAppEffects(addEffect: AddEffectFn) {
   addEffect(
@@ -24,6 +25,7 @@ export function applyAppEffects(addEffect: AddEffectFn) {
       dispatch(initializeProgramStateSlice());
       dispatch(initializeBackendsStateSlice());
       dispatch(initializeMembershipsStateSlice());
+      dispatch(initializeTrackingStateSlice());
       dispatch(setIsHydrated(true));
     },
   );

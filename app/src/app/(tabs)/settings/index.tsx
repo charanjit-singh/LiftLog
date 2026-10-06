@@ -72,6 +72,11 @@ export default function SettingsPageIndex() {
 
       <SegmentedGroup>
         <SegmentedListLink
+          label={t('tracking.settings.title')}
+          icon={'check'}
+          onPress={() => push('/settings/tracking')}
+        />
+        <SegmentedListLink
           label={t('memberships.title')}
           icon={'calendar'}
           onPress={() => push('/settings/memberships')}

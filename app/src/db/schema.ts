@@ -13,7 +13,8 @@ import {
 } from '@/models/storage/versions/any';
 import { BackendFeature, BackendKind } from '@/models/backend';
 import { sql } from 'drizzle-orm';
-import { check, integer, primaryKey, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
+import { check, integer, primaryKey, real, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
+import type { MealType } from '@/models/tracking';
 
 export const sessionsSchema = sqliteTable(
   'session',
@@ -137,4 +138,42 @@ export const gymMembershipsSchema = sqliteTable('gym_membership', {
   startDate: text().notNull(),
   endDate: text(),
   notes: text().notNull().default(''),
+});
+
+// The daily trackers (water, food, smoking) use plain columns like `gym_membership`: each row is a few
+// scalars with no versioned shape. `date` is the day the entry belongs to (yyyy-MM-dd), `loggedAt` an ISO instant.
+export const waterLogSchema = sqliteTable('water_log', {
+  id: text().primaryKey(),
+  date: text().notNull(),
+  ml: integer().notNull(),
+  loggedAt: text().notNull(),
+});
+
+export const smokingLogSchema = sqliteTable('smoking_log', {
+  id: text().primaryKey(),
+  date: text().notNull(),
+  loggedAt: text().notNull(),
+});
+
+export const foodLogSchema = sqliteTable('food_log', {
+  id: text().primaryKey(),
+  date: text().notNull(),
+  meal: text().$type<MealType>().notNull(),
+  name: text().notNull(),
+  calories: integer().notNull(),
+  protein: real().notNull(),
+  carbs: real().notNull(),
+  fat: real().notNull(),
+  loggedAt: text().notNull(),
+});
+
+export const savedFoodSchema = sqliteTable('saved_food', {
+  id: text().primaryKey(),
+  name: text().notNull(),
+  calories: integer().notNull(),
+  protein: real().notNull(),
+  carbs: real().notNull(),
+  fat: real().notNull(),
+  lastUsedAt: text().notNull(),
+  useCount: integer().notNull(),
 });

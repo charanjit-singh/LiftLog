@@ -1,4 +1,4 @@
-# Gym reminders
+# Gym and tracking reminders
 
 Opt-in local notifications (Settings → Notifications → Gym reminders): a witty nudge when you skip the
 gym, and a heads-up before a [membership](./Memberships.md) ends.
@@ -17,3 +17,16 @@ gym, and a heads-up before a [membership](./Memberships.md) ends.
 - **Messages** - the witty copy lives in `en.json` as `gym_reminders.nudge.<n>.title/body`; the key list is in
   `models/gym-reminder-messages.ts`. Add a message by adding both keys and a list entry.
 - **Permission** - requested when the user turns the switch on; a refusal leaves it off.
+
+## Tracker reminders
+
+A second switch (Settings → Notifications → Tracking reminders) adds, from the same planner:
+
+- **Water** at 15:00 and **food logging** at 20:00 each day. For today they are skipped if the water goal is
+  already met or at least two foods are logged; future days always get one, and replanning drops it later if
+  it turns out unneeded.
+- **Smoke-free milestones** (1, 3, 7, 14, 30, 60, 90, 180, 365 days) at 09:00 the morning after each is
+  reached. Logging a cigarette replans and removes them. There is deliberately no nagging for smoking.
+
+iOS keeps at most 64 pending local notifications, so the plan is capped at the nearest 60. The two switches
+are independent: each only plans its own reminders.

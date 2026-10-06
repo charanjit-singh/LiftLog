@@ -125,3 +125,67 @@ describe('ordering', () => {
     expect(times).toEqual([...times].sort());
   });
 });
+
+describe('tracker reminders', () => {
+  const trackerPlan = (trackers: GymReminderPlanInput['trackers'], overrides: Partial<GymReminderPlanInput> = {}) =>
+    plan({ lastWorkoutDate: undefined, trackers, ...overrides });
+  const ofKind = (reminders: ReturnType<typeof plan>, kind: string) => reminders.filter((x) => x.kind === kind);
+
+  it('plans nothing when no tracker is enabled', () => {
+    expect(trackerPlan({})).toEqual([]);
+    expect(trackerPlan(undefined)).toEqual([]);
+  });
+
+  it('reminds about water every afternoon, but not today once the goal is met', () => {
+    const open = ofKind(trackerPlan({ water: { todayMet: false } }), 'water');
+    const met = ofKind(trackerPlan({ water: { todayMet: true } }), 'water');
+
+    expect(open[0]!.at).toEqual(LocalDateTime.of(2026, 10, 6, 15, 0));
+    expect(met[0]!.at).toEqual(LocalDateTime.of(2026, 10, 7, 15, 0));
+    expect(open).toHaveLength(14);
+  });
+
+  it('skips the food reminder today when dinner is probably logged', () => {
+    const sparse = ofKind(trackerPlan({ food: { todayEntries: 1 } }), 'food');
+    const full = ofKind(trackerPlan({ food: { todayEntries: 3 } }), 'food');
+
+    expect(sparse[0]!.at.toLocalDate().toString()).toBe('2026-10-06');
+    expect(full[0]!.at.toLocalDate().toString()).toBe('2026-10-07');
+  });
+
+  it('celebrates smoke-free milestones the morning after they are reached', () => {
+    // Streak began 5 Oct, so it was 2 days old on the 6th: 3 days is complete at the end of the 7th.
+    const reminders = ofKind(
+      trackerPlan({ smokeFree: { streakStart: LocalDate.of(2026, 10, 5) } }),
+      'smokeFreeMilestone',
+    );
+
+    expect(reminders.map((x) => [x.at.toString(), 'days' in x ? x.days : 0]).slice(0, 3)).toEqual([
+      ['2026-10-08T09:00', 3],
+      ['2026-10-12T09:00', 7],
+      ['2026-10-19T09:00', 14],
+    ]);
+  });
+
+  it('never exceeds the iOS pending notification limit, keeping the nearest', () => {
+    const reminders = plan({
+      lastWorkoutDate: LocalDate.of(2026, 10, 1),
+      memberships: Array.from({ length: 30 }, (_, i) => ({
+        id: `m${i}`,
+        name: 'Gym',
+        startDate: '2026-01-01',
+        endDate: `2026-10-${10 + (i % 15)}`,
+        notes: '',
+      })),
+      trackers: {
+        water: { todayMet: false },
+        food: { todayEntries: 0 },
+        smokeFree: { streakStart: LocalDate.of(2026, 10, 1) },
+      },
+    });
+
+    expect(reminders.length).toBeLessThanOrEqual(60);
+    const times = reminders.map((x) => x.at.toString());
+    expect(times).toEqual([...times].sort());
+  });
+});
