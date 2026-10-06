@@ -16,6 +16,7 @@ import { createServices, Services } from '@/services';
 import { aiPlannerReducer } from '@/store/ai-planner';
 import { backendsReducer } from '@/store/backends';
 import { membershipsReducer } from '@/store/memberships';
+import { trackingReducer } from '@/store/tracking';
 import { ExpoSQLiteDatabase } from 'drizzle-orm/expo-sqlite';
 import { SQLiteDatabase } from 'expo-sqlite';
 
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   stats: statsReducer,
   backends: backendsReducer,
   memberships: membershipsReducer,
+  tracking: trackingReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

@@ -33,6 +33,12 @@ work to find the docs relevant to your area, and update it whenever you add, rem
 
 - [Memberships.md](./Memberships.md) - gym membership start/end date records: the model, the
   `gym_membership` table, the slice and effects, and the settings screens.
+- [Tracking.md](./Tracking.md) - the Track tab: water, food and smoking trackers with goals, streaks and
+  calendars, how streaks are defined, and what is not built yet (food database, barcode).
+- [Widgets.md](./Widgets.md) - the Quick log home-screen widgets: why iOS queues taps and Android writes to
+  SQLite, the shared snapshot logic, and what has and has not been verified.
+- [GymReminders.md](./GymReminders.md) - opt-in notifications for skipped gym days (witty nudges), membership
+  expiry and tracker check-ins: the pure planner, the scheduling service, and when the plan is rebuilt.
 
 ## Running it yourself
 

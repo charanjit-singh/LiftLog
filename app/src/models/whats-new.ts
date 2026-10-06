@@ -52,6 +52,19 @@ export const whatsNewEntries: WhatsNewEntry[] = [
     },
     condition: (state) => state.backends.backends.length === 0,
   },
+  {
+    id: 4,
+    icon: 'check',
+    titleKey: 'whats_new.tracking.title',
+    bodyKey: 'whats_new.tracking.body',
+    cta: {
+      labelKey: 'whats_new.tracking.cta',
+      route: '/track',
+    },
+    // Gone as soon as the user has logged anything, since they have found it.
+    condition: (state) =>
+      state.tracking.water.length + state.tracking.food.length + state.tracking.smoking.length === 0,
+  },
 ];
 
 export const latestWhatsNewId = whatsNewEntries.reduce((max, entry) => Math.max(max, entry.id), 0);

@@ -24,6 +24,13 @@ export default function TabsLayout() {
           md={{ default: 'fitness_center', selected: 'fitness_center' }}
         />
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="track">
+        <NativeTabs.Trigger.Label>{t('tracking.title')}</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon
+          sf={{ default: 'checkmark.circle', selected: 'checkmark.circle.fill' }}
+          md={{ default: 'check_circle', selected: 'check_circle' }}
+        />
+      </NativeTabs.Trigger>
       <NativeTabs.Trigger name="feed" hidden={!showFeed}>
         <NativeTabs.Trigger.Icon
           sf={{
