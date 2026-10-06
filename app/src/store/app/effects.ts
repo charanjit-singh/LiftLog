@@ -12,6 +12,7 @@ import { initializeSettingsStateSlice } from '../settings';
 import { initializeProgramStateSlice } from '../program';
 import { setStringAsync } from 'expo-clipboard';
 import { initializeBackendsStateSlice } from '@/store/backends';
+import { initializeMembershipsStateSlice } from '@/store/memberships';
 
 export function applyAppEffects(addEffect: AddEffectFn) {
   addEffect(
@@ -22,6 +23,7 @@ export function applyAppEffects(addEffect: AddEffectFn) {
       dispatch(initializeSettingsStateSlice());
       dispatch(initializeProgramStateSlice());
       dispatch(initializeBackendsStateSlice());
+      dispatch(initializeMembershipsStateSlice());
       dispatch(setIsHydrated(true));
     },
   );

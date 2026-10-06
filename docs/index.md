@@ -31,6 +31,9 @@ work to find the docs relevant to your area, and update it whenever you add, rem
 - [RemoteBackup.md](./RemoteBackup.md) — the automatic remote backup: the app-side settings, the HTTPS
   requirement, and the contract a self-hosted backup endpoint must satisfy.
 
+- [Memberships.md](./Memberships.md) - gym membership start/end date records: the model, the
+  `gym_membership` table, the slice and effects, and the settings screens.
+
 ## Running it yourself
 
 - [SelfHosting.md](./SelfHosting.md) — quickstart for running your own backend: a copy-paste Docker

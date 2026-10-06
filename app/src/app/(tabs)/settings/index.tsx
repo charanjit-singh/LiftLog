@@ -71,6 +71,11 @@ export default function SettingsPageIndex() {
       </SegmentedGroup>
 
       <SegmentedGroup>
+        <SegmentedListLink
+          label={t('memberships.title')}
+          icon={'calendar'}
+          onPress={() => push('/settings/memberships')}
+        />
         <SegmentedListLink label={t('backends.title')} icon={'dns'} onPress={() => push('/settings/backends')} />
         <SegmentedListLink
           label={t('backup.export_backup_restore.title')}

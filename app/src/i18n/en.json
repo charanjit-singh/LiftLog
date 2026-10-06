@@ -92,7 +92,6 @@
   "backup.import_from_other_apps.already_imported.message": "Those workouts are already in History",
   "backup.import_from_other_apps.failed.message": "Could not import: {error}",
   "backup.sent_successfully.message": "Backup sent successfully",
-
   "cardio_timer.status.over_target": "Over target",
   "cardio_timer.status.working": "Working",
   "cardio_timer.stop": "Stop timer and log time",
@@ -700,5 +699,24 @@
   "exercise.mechanic.isolation": "Isolation",
   "exercise.progression.rule.never_runs.label": "never runs",
   "exercise.progression.blocks_later.load.body": "A weight rule has no limit, so it never stops and the rules after it never take over. Move it to the end.",
-  "exercise.progression.blocks_later.reps.body": "Without a limit this rule never stops, so the rules after it never take over. Set a limit, or move this rule to the end."
+  "exercise.progression.blocks_later.reps.body": "Without a limit this rule never stops, so the rules after it never take over. Set a limit, or move this rule to the end.",
+  "memberships.title": "Gym membership",
+  "memberships.explanation": "Record when each gym membership starts and ends. Stored on this device and included in backups.",
+  "memberships.add.button": "Add membership",
+  "memberships.unnamed.label": "Unnamed membership",
+  "memberships.name.label": "Gym or plan name",
+  "memberships.name.required.message": "A name is required",
+  "memberships.start_date.label": "Start date",
+  "memberships.end_date.label": "End date",
+  "memberships.end_date.hint": "Leave the end date empty for an ongoing membership",
+  "memberships.dates.invalid.message": "The end date can't be before the start date",
+  "memberships.notes.label": "Notes",
+  "memberships.range.label": "{start} to {end}",
+  "memberships.range_ongoing.label": "From {start}",
+  "memberships.status.upcoming.label": "Upcoming",
+  "memberships.status.active.label": "Active",
+  "memberships.status.ended.label": "Ended",
+  "memberships.days_remaining.label": "{count, plural, one {# day left} other {# days left}}",
+  "memberships.delete.title": "Delete this membership?",
+  "memberships.delete.message": "This removes the membership record. Your workouts are not affected."
 }
