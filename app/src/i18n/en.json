@@ -820,5 +820,11 @@
   "tracking.reminder.smoke_free.title": "{days, plural, one {# day smoke-free} other {# days smoke-free}}",
   "tracking.reminder.smoke_free.body": "That is real progress. Keep going.",
   "tracking.reminders.title": "Tracking reminders",
-  "tracking.reminders.subtitle": "Water and meal check-ins, plus a note when you hit a smoke-free milestone"
+  "tracking.reminders.subtitle": "Water and meal check-ins, plus a note when you hit a smoke-free milestone",
+  "widget.empty.message": "Turn on a tracker in LiftLog settings",
+  "widget.name.label": "Quick log",
+  "widget.description.label": "Log water and cigarettes and see today's progress from your home screen",
+  "whats_new.tracking.title": "Track water, food and smoking",
+  "whats_new.tracking.body": "Log water, meals and cigarettes in one tap, with streaks, calendars and goals. Add the Quick log widget to your home screen to log without opening the app.",
+  "whats_new.tracking.cta": "Open Track"
 }
