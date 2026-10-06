@@ -41,6 +41,22 @@ The two platforms work differently because the platforms allow different things.
 - The handler has no i18n, so the app saves its translated labels (`widgetLabels`) for the widget to read.
 - A tap while the database has not been migrated yet (a fresh install never opened) shows the empty state.
 
+## Lock Screen widgets
+
+- **iOS** - a second widget, **Streaks** (`src/widgets/streaks-widget.tsx`), in the three accessory sizes. Circular
+  shows a ring and the streak for one tracker, inline shows one line, rectangular lists every enabled tracker.
+  It has no buttons: the Lock Screen is for glancing, and a tap opens the Track tab. Long-press the widget and
+  choose **Edit Widget** to pick the tracker for circular and inline. The smoking ring is full while the day is
+  clean and drains as a limit is used. It is refreshed alongside Quick log, from the same snapshot.
+- **Android** - there is no separate widget. `plugins/android-widget-lockscreen.js` adds the `keyguard`
+  category to Quick log's provider, so it can be placed on the lock screen where the OS allows it (tablets and
+  recent Android versions); older versions ignore the extra category. The plugin must be listed _before_
+  `react-native-android-widget` in `app.json`, because Expo runs mods in reverse order.
+- The tracker names in the iOS Edit Widget picker are fixed English text from `app.json`; widget configuration
+  cannot be translated from the app.
+- `src/widgets/widget-layouts.spec.tsx` loads both iOS layouts with the native UI stubbed out and checks what
+  they draw and what their buttons queue.
+
 ## Known limits
 
 - Both platforms are verified by bundling with Metro and running `expo prebuild`, plus unit tests for the shared

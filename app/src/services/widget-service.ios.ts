@@ -3,6 +3,7 @@ import { RootState } from '@/store';
 import { putSmokeEntry, putWaterEntry } from '@/store/tracking';
 import { buildWidgetSnapshot } from '@/store/tracking/widget-snapshot';
 import { quickLogWidget, QuickLogWidgetProps } from '@/widgets/quick-log-widget';
+import { streaksWidget } from '@/widgets/streaks-widget';
 import { LocalDate } from '@js-joda/core';
 import { Dispatch } from '@reduxjs/toolkit';
 import { TolgeeInstance, TranslationKey } from '@tolgee/react';
@@ -53,6 +54,11 @@ export class WidgetService {
     quickLogWidget.updateTimeline([
       { date: new Date(), props: now },
       { date: nextMidnight(today), props: tomorrow },
+    ]);
+    // The Lock Screen widget has no buttons, so it needs no queue - just the same two days of numbers.
+    streaksWidget.updateTimeline([
+      { date: new Date(), props: { ...snapshot, labels: base.labels } },
+      { date: nextMidnight(today), props: { ...snapshotForNextDay(snapshot, today.plusDays(1)), labels: base.labels } },
     ]);
   }
 

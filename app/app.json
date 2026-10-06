@@ -63,10 +63,39 @@
               "contentMarginsDisabled": false,
               "ios": { "supportedFamilies": ["systemSmall", "systemMedium"], "contentMarginsDisabled": false },
               "android": null
+            },
+            {
+              "name": "Streaks",
+              "displayName": "Streaks",
+              "description": "Today's progress and streaks on your Lock Screen",
+              "supportedFamilies": ["accessoryCircular", "accessoryRectangular", "accessoryInline"],
+              "contentMarginsDisabled": false,
+              "ios": {
+                "supportedFamilies": ["accessoryCircular", "accessoryRectangular", "accessoryInline"],
+                "contentMarginsDisabled": false,
+                "configuration": {
+                  "title": "Tracker",
+                  "description": "Which tracker the circular and inline widgets show",
+                  "parameters": {
+                    "tracker": {
+                      "title": "Tracker",
+                      "type": "enum",
+                      "values": [
+                        { "name": "Water", "value": "water" },
+                        { "name": "Food", "value": "food" },
+                        { "name": "Smoking", "value": "smoking" }
+                      ],
+                      "default": "water"
+                    }
+                  }
+                }
+              },
+              "android": null
             }
           ]
         }
       ],
+      ["./plugins/android-widget-lockscreen.js", { "widgets": ["QuickLog"] }],
       [
         "react-native-android-widget",
         {
