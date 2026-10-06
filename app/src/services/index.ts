@@ -15,6 +15,7 @@ import { ProgressRepository } from '@/services/progress-repository';
 import { SessionService } from '@/services/session-service';
 import { StringSharer } from '@/services/string-sharer';
 import { getTolgee } from '@/services/tolgee';
+import { GymReminderService } from '@/services/gym-reminder-service';
 import { WorkoutWorker } from '@/services/workout-worker';
 import { RootState } from '@/store';
 import { Store } from '@reduxjs/toolkit';
@@ -44,6 +45,7 @@ export function createServices(store: Store<RootState>, db: ExpoSQLiteDatabase, 
   const preferenceService = new PreferenceService(keyValueStore);
   const aiChatService = new AiChatServiceV2(new HubConnectionFactory(), store.getState);
   const tolgee = getTolgee(preferenceService);
+  const gymReminderService = new GymReminderService(tolgee);
   const workoutWorkerService = new WorkoutWorker(store.dispatch, store.getState, tolgee);
   const healthExportService: HES = new HealthExportService();
   const databaseMigrationService = new DatabaseMigrationService(
@@ -71,6 +73,7 @@ export function createServices(store: Store<RootState>, db: ExpoSQLiteDatabase, 
     aiChatService,
     workoutWorkerService,
     tolgee,
+    gymReminderService,
     db,
     expoDb,
     databaseMigrationService,

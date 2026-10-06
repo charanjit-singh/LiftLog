@@ -33,6 +33,8 @@ work to find the docs relevant to your area, and update it whenever you add, rem
 
 - [Memberships.md](./Memberships.md) - gym membership start/end date records: the model, the
   `gym_membership` table, the slice and effects, and the settings screens.
+- [GymReminders.md](./GymReminders.md) - opt-in notifications for skipped gym days (witty nudges) and
+  membership expiry: the pure planner, the scheduling service, and when the plan is rebuilt.
 
 ## Running it yourself
 
